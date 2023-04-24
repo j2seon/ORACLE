@@ -415,6 +415,12 @@ SELECT
 SELECT 
         TO_CHAR(TO_DATE('980630','RRMMDD'), 'RRRR-MM-DD')
     FROM DUAL;
+    
+
+
+SELECT 
+       TO_CHAR(SYSDATE, 'RRRR')
+    FROM DUAL;
 
 -- 오늘 날짜에서 월만 출력
 SELECT 
@@ -633,7 +639,7 @@ SELECT
   FROM EMPLOYEE;
 
 /* 3. 부서코드가 D5, D9인 직원들 중에서 2004년도에 입사한 직원의 직원수를 조회 */
-
+SELECT 
 
 
 /*4. 직원명, 입사일, 입사한 달의 근무일수 조회
