@@ -235,6 +235,10 @@ SELECT
         MOD(10, 7)
       , MOD(10, 3)
     FROM DUAL;
+
+SELECT 
+        SIGN(-10)
+    FROM DUAL;
     
 -- ROUND(숫자 | 숫자로된 컬럼명, [위치]) : 반올림해서 리턴하는 함수
 SELECT ROUND(123.56) FROM DUAL;
@@ -313,7 +317,6 @@ ALTER SESSION SET NLS_LANGUAGE = KOREAN;
 
 -- LAST_DAY(날짜) : 해당 월의 마지막 날짜를 구하여 리턴
 SELECT SYSDATE, LAST_DAY(SYSDATE) FROM DUAL;
-
 -- EXTRACT : 년, 월, 일 정보를 추출하여 리턴하는 함수 
 -- EXTRACT(YEAR FROM 날짜) : 년도만 추출
 -- EXTRACT(MONTH FROM 날짜) : 월만 추출
@@ -358,7 +361,7 @@ SELECT TO_CHAR(1324, '00,000') FROM DUAL;
 SELECT TO_CHAR(1324, '999') FROM DUAL;
 
 
--- 직원 테이블에서 사원명 ,급여 조회, 급여는 '\9,000,000'형식으로 표시하세요
+-- 직원 테이블에서 사원명 ,급여 조회, 급여는 '￦9,000,000'형식으로 표시하세요
 SELECT 
         EMP_NAME
       , TO_CHAR(SALARY, 'L99,999,999')
@@ -475,7 +478,7 @@ SELECT
 --   WHERE HIRE_DATE > 20000101; -- 숫자는 날짜로 자동형변환 안된다.
    WHERE HIRE_DATE > TO_DATE(20000101,'RRRRMMDD');
 
--- TO_NUMBER(문제데이터, [포멧]) : 문자데이터를 숫자로 리턴
+-- TO_NUMBER(문자데이터, [포멧]) : 문자데이터를 숫자로 리턴
 SELECT TO_NUMBER('123456789') FROM DUAL;
 
 -- 자동 형변환
@@ -544,6 +547,34 @@ SELECT
       , BONUS
       , NVL2(BONUS, 0.7, 0.5)
     FROM EMPLOYEE;
+
+-- NULLIF함수
+-- 같으면 NULL반환 
+-- 다르면 앞의 숫자반환
+SELECT 
+       NULLIF(1,1)
+     , NULLIF(1,2)
+    FROM DUAL;
+SELECT 
+       NULLIF(SYSDATE,SYSDATE)
+     , NULLIF('A1','B')
+    FROM DUAL;
+
+-- 비교함수 
+-- LEAST 함수 : 최소값을 반환한다. NULL이 있다면 NULL을 반환함
+SELECT 
+       LEAST(1,2)
+     , LEAST('A','B')
+     , LEAST(NULL,1)
+    FROM DUAL;
+
+-- GREATEST : 최대값 반환 NULL이 있다면 NULL 반환
+SELECT 
+       GREATEST(1,2)
+     , GREATEST('A','B')
+     , GREATEST(NULL,1)
+    FROM DUAL;
+
 
 -- 선택함수
 -- 여러가지 경우에 선택할 수 있는 기능을 제공한다.
@@ -617,6 +648,11 @@ SELECT
         END AS 구분
     FROM EMPLOYEE;
     
+SELECT 
+      DEPT_CODE
+   FROM EMPLOYEE 
+  WHERE LNNVL(DEPT_CODE = 'D9');
+
     
 -- 함수 연습 문제 
 /*1. 직원명과 주민번호를 조회함
@@ -640,19 +676,28 @@ SELECT
 
 /* 3. 부서코드가 D5, D9인 직원들 중에서 2004년도에 입사한 직원의 직원수를 조회 */
 SELECT 
+       COUNT(*)
+    FROM EMPLOYEE
+  WHERE DEPT_CODE IN ('D5','D9')
+   AND EXTRACT(YEAR FROM HIRE_DATE) = 2004;
 
 
 /*4. 직원명, 입사일, 입사한 달의 근무일수 조회
   단, 주말도 포함함
 */
-
-
+SELECT 
+       EMP_NAME
+     , HIRE_DATE
+     , EXTRACT(DAY FROM LAST_DAY(HIRE_DATE)) - EXTRACT(DAY FROM HIRE_DATE) "입사 달 근무일수"
+   FROM EMPLOYEE 
 
 /* 5. 직원명, 부서코드, 생년월일, 나이(만) 조회
      단, 생년월일은 주민번호에서 추출해서, 
      ㅇㅇ년 ㅇㅇ월 ㅇㅇ일로 출력되게 함.
      나이는 주민번호에서 추출해서 날짜데이터로 변환한 다음, 계산함
 */
+
+
 
 
 

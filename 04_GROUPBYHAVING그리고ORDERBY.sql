@@ -48,7 +48,7 @@ SELECT
 --   ORDER BY DEPT_CODE DESC NULLS FIRST;
    ORDER BY 합계 ASC NULLS FIRST;
 
--- 직원테이블에서 직급코드 보너스를 받는 사원 수를 조회하여
+-- 직원테이블에서 직급코드, 보너스를 받는 사원 수를 조회하여
 -- 직급코드 순으로 오름차순 정렬하세요
 SELECT 
         JOB_CODE
@@ -68,6 +68,7 @@ SELECT
       
 -- 직원 테이블에서 주민번호의 8번째 자리를 조회하여 1이면 남, 2면 여로 결과를 조회하고
 -- 성별별 급여 평균(점수처리), 급여합계, 인원수를 조회한 뒤 인원수로 내림차순 정렬
+
 SELECT 
         DECODE(SUBSTR(EMP_NO, 8, 1),'1','남','여') 성별
       , FLOOR(AVG(SALARY)) 평균
@@ -116,7 +117,6 @@ SELECT
     FROM EMPLOYEE
    GROUP BY DEPT_CODE
    HAVING SUM(SALARY) = 17700000;
-
 
 SELECT 
         DEPT_CODE
