@@ -689,14 +689,19 @@ SELECT
        EMP_NAME
      , HIRE_DATE
      , EXTRACT(DAY FROM LAST_DAY(HIRE_DATE)) - EXTRACT(DAY FROM HIRE_DATE) "입사 달 근무일수"
-   FROM EMPLOYEE 
+   FROM EMPLOYEE ;
 
 /* 5. 직원명, 부서코드, 생년월일, 나이(만) 조회
      단, 생년월일은 주민번호에서 추출해서, 
      ㅇㅇ년 ㅇㅇ월 ㅇㅇ일로 출력되게 함.
      나이는 주민번호에서 추출해서 날짜데이터로 변환한 다음, 계산함
 */
-
+SELECT 
+       EMP_NAME
+     , DEPT_CODE
+--     , TO_CHAR(TO_DATE(SUBSTR(EMP_NO,1,6),'RRMMDD'),'RR"년 " MM"월 " DD"일"')
+--     , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(SUBSTR(EMP_NO,1,6)))
+  FROM EMPLOYEE;
 
 
 
@@ -709,6 +714,9 @@ SELECT
         전체직원수   2001년   2002년   2003년   2004년
         -------------------------------------------------------------
 */
+
+
+
 
 /*7.  부서코드가 D5이면 총무부, D6이면 기획부, D9이면 영업부로 처리하시오.
       단, 부서코드가 D5, D6, D9 인 직원의 정보만 조회함

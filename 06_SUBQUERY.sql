@@ -18,7 +18,7 @@ SELECT
 SELECT 
        E.EMP_NAME
    FROM EMPLOYEE E
-  WHERE E.DEPT_CODE =(SELECT E.DEPT_CODE
+  WHERE E.DEPT_CODE = (SELECT E.DEPT_CODE
                       FROM EMPLOYEE E
                       WHERE E.EMP_NAME = '노옹철'
                       );
@@ -77,9 +77,12 @@ SELECT
    FROM EMPLOYEE E
    LEFT JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
   GROUP BY D.DEPT_TITLE
- HAVING SUM(E.SALARY) = (SELECT MAX(SUM(E2.SALARY))
+ HAVING SUM(E.SALARY) = (SELECT MAX(SUM(E2.SALARY)
                          FROM EMPLOYEE E2
                          GROUP BY E2.DEPT_CODE);
+                         
+                         
+                         
                 
 -- 다중행 서브쿼리
 -- 다중행 서브쿼리 앞에서는 일반 비교연산자를 사용하지 못한다
@@ -238,16 +241,17 @@ SELECT
                     );
                     
 -- 다중행 다중열 서브쿼리를 이용
-SELECT
-       E.EMP_ID
-     , E.EMP_NAME
+SELECT 
+       E.EMP_NAME
      , E.JOB_CODE
      , E.SALARY
-   FROM EMPLOYEE E      
-  WHERE (E.JOB_CODE, E.SALARY) IN (SELECT TRUNC(AVG(E2.SALARY),-5)
-                                     FROM EMPLOYEE E2
-                                    GROUP BY E2.JOB_CODE
-                                  );                     
+  FROM EMPLOYEE E
+ WHERE (E.JOB_CODE, E.SALARY) IN (SELECT E2.JOB_CODE
+                                       , TRUNC(AVG(E2.SALARY), -5)
+                                    FROM EMPLOYEE E2
+                                   GROUP BY E2.JOB_CODE
+                                 );
+                
 -- 다중열 서브쿼리
 -- 퇴사한 여직원과 같은 부서 같은 직급에 해당하는 
 -- 사원의 이름, 직급, 부서, 입사일
@@ -329,7 +333,7 @@ SELECT
               , J.JOB_NAME 직급이름
             FROM EMPLOYEE E
             LEFT JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
-            JOIN JOB J ON(E.JOB_CODE =J.JOB_CODE)
+            JOIN JOB J ON(E.JOB_CODE = J.JOB_CODE)
          ) V
   WHERE V.부서명 = '인사관리부';
                    
@@ -355,7 +359,6 @@ SELECT
   WHERE ROWNUM <=5;
   
 -- 급여 평균 3위 안에 드는 부서의 부서코드와 부서명, 평균급여를 조회하세요
-
 SELECT 
       ROWNUM
     , V.DEPT_CODE
@@ -370,7 +373,7 @@ SELECT
             ORDER BY 평균급여 DESC
          ) V
   WHERE ROWNUM <=3;
-                   
+               
 -- 직원 정보에서 급여를 가장 많이 받는 순으로 이름 급여 순위 조회
 -- RANK()함수 : 동일한 순위 이후의 등수를 동일한 인원수만큼 건너 뛰고 다음 순위를 계산하는 방식
 SELECT 
@@ -452,7 +455,7 @@ SELECT
         ) V
   WHERE V.SSAL > (SELECT SUM(E2.SALARY) * 0.2
                       FROM EMPLOYEE E2
-                );
+                 );
                 
 --WITH 
 WITH
@@ -526,6 +529,7 @@ SELECT
 
 -- SELECT절에서 스칼라서브쿼리
 -- 모든 사원의 사번, 이름, 관리자사번, 관리자명을 조회하세요
+    
 SELECT 
        E.EMP_ID
      , E.EMP_NAME
@@ -534,7 +538,8 @@ SELECT
               FROM EMPLOYEE M
              WHERE E.MANAGER_ID = M.EMP_ID
              ), '없음')
-    FROM EMPLOYEE E;    
+    FROM EMPLOYEE E;     
+    
   
 -- ORDER BY 절에서 스칼라 서브쿼리 이용
 -- 모든 직원의 사번, 이름, 소속부서 조회
