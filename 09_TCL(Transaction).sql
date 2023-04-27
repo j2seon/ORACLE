@@ -1,4 +1,4 @@
-
+-- TCL(Transaction Controll Language)
 -- 트렌젝션 제어 언어
 -- COMMIT과 ROLLBACK이 있다.
 
