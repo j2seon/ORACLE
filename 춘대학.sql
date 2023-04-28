@@ -38,6 +38,29 @@ SELECT
     5. 입학정원이 20 명 이상 30 명 이하인 학과들의 학과 이름과 계열을 출력하시오.
 */
 
+SELECT 
+       D.DEPARTMENT_NAME
+     , D.CATEGORY
+   FROM TB_DEPARTMENT D
+   WHERE D.CAPACITY BETWEEN 20 AND 30;
+
+/*
+    6. 춘 기술대학교는 총장을 제외하고 모든 교수들이 소속 학과를 가지고 있다. 그럼 춘
+    기술대학교 총장의 이름을 알아낼 수 있는 SQL 문장을 작성하시오.
+*/
+
+SELECT 
+       P.PROFESSOR_NAME
+   FROM TB_PROFESSOR P
+  WHERE P.DEPARTMENT_NO IS NULL;
+
+/*
+    7. 혹시 전산상의 착오로 학과가 지정되어 있지 않은 학생이 있는지 확인하고자 한다. 
+    어떠한 SQL 문장을 사용하면 될 것인지 작성하시오.
+*/
+
+
+
 
 
 /*

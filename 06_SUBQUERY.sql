@@ -295,7 +295,7 @@ SELECT
                                         FROM EMPLOYEE E2
                                        WHERE SUBSTR(E2.EMP_NO, 8, 1) = 2
                                          AND E2.ENT_YN = 'Y'
-                                      )
+                                      );
     AND E.EMP_ID NOT IN (SELECT E4.EMP_ID
                          FROM EMPLOYEE E4
                         WHERE SUBSTR(E4.EMP_NO, 8, 1) = 2
