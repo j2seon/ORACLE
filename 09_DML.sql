@@ -14,7 +14,6 @@
    모든 컬럼에 INSERT 할때도 컬럼명을 기술하는 것이 의미 파악에 더 좋다
 */
 
-
 INSERT
     INTO EMPLOYEE E
 (
@@ -125,6 +124,7 @@ DELETE
 -- INSERT ALL INTO 테이블명 VALUES(컬럼명)
 --            INTO 테이블명 VALUES(컬럼명)
 --  서브쿼리 ;
+
 INSERT ALL
    INTO EMP_DEPT_D1
 VALUES(

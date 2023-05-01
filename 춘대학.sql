@@ -59,6 +59,93 @@ SELECT
     어떠한 SQL 문장을 사용하면 될 것인지 작성하시오.
 */
 
+SELECT 
+       T.DEPARTMENT_NO 
+    FROM TB_STUDENT T
+   WHERE T.DEPARTMENT_NO IS NULL;
+
+/*
+    8. 수강신청을 하려고 한다. 선수과목 여부를 확인해야 하는데, 선수과목이 존재하는
+    과목들은 어떤 과목인지 과목번호를 조회해보시오.
+*/
+
+SELECT 
+       T.CLASS_NO
+    FROM TB_CLASS T
+   WHERE T.PREATTENDING_CLASS_NO IS NOT NULL;
+
+
+/*
+     9. 춘 대학에는 어떤 계열(CATEGORY)들이 있는지 조회해보시오.
+*/
+SELECT 
+       DISTINCT D.CATEGORY
+    FROM TB_DEPARTMENT D;
+
+/*
+    10. 02 학번 전주 거주자들의 모임을 만들려고 핚다. 휴학한 사람들은 제외한 재학중인
+    학생들의 학번, 이름, 주민번호를 출력하는 구문을 작성하시오.
+*/
+
+SELECT 
+       S.STUDENT_NO
+     , S.STUDENT_NAME
+     , S.STUDENT_SSN
+     , S.STUDENT_ADDRESS
+   FROM TB_STUDENT S
+  WHERE EXTRACT(YEAR FROM S.ENTRANCE_DATE) = '2002'
+    AND S.STUDENT_ADDRESS LIKE '전주시%' 
+    AND S.ABSENCE_YN = 'N';
+
+---------------------------- 함 수 ------------------------------------ 
+
+/*
+    1. 영어영문학과(학과코드 002) 학생들의 학번과 이름, 입학 년도를 입학 년도가 빠른
+    순으로 표시하는 SQL 문장을 작성하시오.( 단, 헤더는 "학번", "이름", "입학년도" 가
+    표시되도록 핚다.)
+*/
+
+SELECT 
+       S.STUDENT_NO 학번
+     , S.STUDENT_NAME 이름
+     , S.ENTRANCE_DATE 입학년도
+   FROM TB_STUDENT S
+  WHERE S.DEPARTMENT_NO = (SELECT T.DEPARTMENT_NO 
+                             FROM TB_DEPARTMENT T
+                            WHERE T.DEPARTMENT_NAME = '영어영문학과')
+   ORDER BY S.ENTRANCE_DATE ASC;            
+  
+
+/*
+    2. 춘 기술대학교의 교수 중 이름이 세 글자가 아닌 교수가 한 명 있다고 핚다. 그 교수의
+    이름과 주민번호를 화면에 출력하는 SQL 문장을 작성해 보자. (* 이때 올바르게 작성한 SQL 
+    문장의 결과 값이 예상과 다르게 나올 수 있다. 원인이 무엇일지 생각해볼 것)
+*/
+
+SELECT 
+       P.PROFESSOR_NAME 이름
+     , P.PROFESSOR_SSN 주민번호
+   FROM TB_PROFESSOR P
+  WHERE PROFESSOR_NAME NOT LIKE '___'; 
+
+/*
+    3. 춘 기술대학교의 남자 교수들의 이름과 나이를 출력하는 SQL 문장을 작성하시오. 단
+    이때 나이가 적은 사람에서 맋은 사람 순서로 화면에 출력되도록 맊드시오. (단, 교수 중
+    2000 년 이후 출생자는 없으며 출력 헤더는 "교수이름", "나이"로 핚다. 나이는 ‘만’으로
+    계산한다.)
+*/
+
+SELECT 
+       P.PROFESSOR_NAME 교수이름
+     , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(19||SUBSTR(PROFESSOR_SSN,1,6), 'RRRRMMDD')) 나이
+   FROM TB_PROFESSOR P
+   ORDER BY P.PROFESSOR_SSN DESC;
+
+/*
+    4. 교수들의 이름 중 성을 제외핚 이름맊 출력하는 SQL 문장을 작성하시오. 출력 헤더는
+    ‚이름‛ 이 찍히도록 핚다. (성이 2 자인 경우는 교수는 없다고 가정하시오)
+*/
+
 
 
 
@@ -67,15 +154,12 @@ SELECT
 10. 학과별 학생수를 구하여 "학과번호", "학생수(명)" 의 형태로 헤더를 맊들어 결과값이
 출력되도록 하시오.
 */
-
 SELECT
        DEPARTMENT_NO 
      , COUNT(*) "학생수(명)"
    FROM TB_STUDENT
    GROUP BY DEPARTMENT_NO
    ORDER BY DEPARTMENT_NO ;
-
-
 
 /*
     12. 학번이 A112113 인 김고운 학생의 년도 별 평점을 구하는 SQL 문을 작성하시오. 단, 

@@ -74,7 +74,7 @@ SELECT
    FROM DEPARTMENT D
    JOIN LOCATION L ON(D.LOCATION_ID = L.LOCAL_CODE);
 
--- 조인은 기본이 EQUAL JOIN(EQU JOIN이라고 한다.
+-- 조인은 기본이 EQUAL JOIN(EQU JOIN)이라고 한다.
 -- 연결되는 컬럼의 값이 일치하는 행들만 조인된다.
 
 
@@ -83,7 +83,7 @@ SELECT
 -- OUTER JOIN : 두 테이블의 지정하는 컬럼 값이 일치하지 않는 행도 조인에 포함을 시킨다.
 --            반드시 OUTER JOIN임을 명시해야한다.
 
--- 1.LEFT OUTER JOIN : 합치기에 사용한 두 테이블 중 왼편에 기술된 테이블의 행의 수를 기준으로 JOIN
+-- 1. LEFT OUTER JOIN : 합치기에 사용한 두 테이블 중 왼편에 기술된 테이블의 행의 수를 기준으로 JOIN
 -- 2. RIGHT OUTER JOIN : 합치기에 사용한 두 테이블 중 오른편에 기술된 테이블의 행의 수를 기준으로 JOIN
 -- 3. FULL OYTER JOIN : 합치기에 사용한 두 테이블이 가진 모든 행을 결과에 포함하여 JOIN
 
@@ -108,12 +108,6 @@ SELECT
      , DEPT_TITLE
    FROM EMPLOYEE
    LEFT OUTER JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID);
-
-SELECT 
-       EMP_NAME
-     , DEPT_TITLE
-   FROM EMPLOYEE
-   LEFT JOIN DEPARTMENT ON(DEPT_CODE = DEPT_ID);
 
 -- RIGHT OUTER JOIN 
 -- 오라클 전용

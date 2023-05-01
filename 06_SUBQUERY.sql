@@ -77,7 +77,7 @@ SELECT
    FROM EMPLOYEE E
    LEFT JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
   GROUP BY D.DEPT_TITLE
- HAVING SUM(E.SALARY) = (SELECT MAX(SUM(E2.SALARY)
+ HAVING SUM(E.SALARY) = (SELECT MAX(SUM(E2.SALARY))
                          FROM EMPLOYEE E2
                          GROUP BY E2.DEPT_CODE);
                          
@@ -290,13 +290,13 @@ SELECT
      , E.DEPT_CODE
      , E.HIRE_DATE
    FROM EMPLOYEE E
-  WHERE (E.DEPT_CODE, E.JOB_CODE) IN (SELECT E2.DEPT_CODE
+  WHERE (E.DEPT_CODE, E.JOB_CODE) = (SELECT E2.DEPT_CODE
                                            , E2.JOB_CODE
                                         FROM EMPLOYEE E2
                                        WHERE SUBSTR(E2.EMP_NO, 8, 1) = 2
                                          AND E2.ENT_YN = 'Y'
-                                      );
-    AND E.EMP_ID NOT IN (SELECT E4.EMP_ID
+                                      )
+    AND E.EMP_ID <> (SELECT E4.EMP_ID
                          FROM EMPLOYEE E4
                         WHERE SUBSTR(E4.EMP_NO, 8, 1) = 2
                           AND E4.ENT_YN = 'Y'
