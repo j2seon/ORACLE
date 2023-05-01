@@ -326,6 +326,7 @@ SELECT
 SELECT
        *
    FROM DEPARTMENT;
+   
 DELETE
   FROM EMPLOYEE;
  
@@ -344,6 +345,7 @@ DELETE
 DELETE 
    FROM DEPARTMENT D
   WHERE  D.DEPT_ID = 'D3';
+
 ROLLBACK;
 
  -- 삭제 시 FOREIGN KEY 제약조건으로 칼럼삭제가 불가능한 경우
