@@ -142,12 +142,23 @@ SELECT
    ORDER BY P.PROFESSOR_SSN DESC;
 
 /*
-    4. 교수들의 이름 중 성을 제외핚 이름맊 출력하는 SQL 문장을 작성하시오. 출력 헤더는
+    4. 교수들의 이름 중 성을 제외한 이름만 출력하는 SQL 문장을 작성하시오. 출력 헤더는
     ‚이름‛ 이 찍히도록 핚다. (성이 2 자인 경우는 교수는 없다고 가정하시오)
 */
 
+SELECT 
+      SUBSTR(PROFESSOR_NAME,2,2) 이름
+   FROM TB_PROFESSOR;
 
-
+/*
+    5. 춘 기술대학교의 재수생 입학자를 구하려고 핚다. 어떻게 찾아낼 것인가? 이때, 
+    19 살에 입학하면 재수를 하지 않은 것으로 간주핚다.
+*/
+SELECT
+       STUDENT_NO
+     , STUDENT_NAME
+   FROM TB_STUDENT
+  WHERE EXTRACT(YEAR FROM ENTRANCE_DATE) - (19||SUBSTR(STUDENT_SSN,1,2)+1);
 
 
 /*

@@ -112,6 +112,7 @@ BEGIN
                          || TO_CHAR(YSALARY, 'L99,999,999'));
 END;
 /
+
 SELECT (SALARY) * 12 FROM EMPLOYEE WHERE EMP_ID = '201';
 
 -- 점수를 입력받아 SCORE 변수에 저장하고
