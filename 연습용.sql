@@ -29,4 +29,4 @@ BEGIN
    DBMS_OUTPUT.PUT_LINE(EMP_NAME);  
 END;
 /
-         
+select * from employee;
